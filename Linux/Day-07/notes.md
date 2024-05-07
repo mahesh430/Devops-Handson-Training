@@ -132,3 +132,72 @@
   ```bash
   arp -a
   ```
+
+---
+
+# Understanding the `/etc/hosts` and `resolv.conf` Files in Linux
+
+## Overview
+The `/etc/hosts` and `resolv.conf` files play crucial roles in the network configuration of a Linux system. They control how the system resolves hostnames to IP addresses.
+
+## `/etc/hosts`
+
+### Description
+The `/etc/hosts` file is an operating system file that maps hostnames to IP addresses. It is one of several methods used by a system to resolve domain names. In many cases, it can be used to override DNS lookups.
+
+### Format
+Each line in the file contains an IP address followed by one or more hostnames. Entries are typically separated by whitespace (spaces or tabs). Here is an example of its content:
+
+```
+127.0.0.1   localhost
+192.168.1.10   example.local example
+```
+
+- `127.0.0.1` is the loopback IP address typically assigned to `localhost`.
+- `192.168.1.10` could be an IP address for a local computer or server within your network.
+
+### Common Uses
+- **Local DNS**: It's often used in development environments to point to locally hosted domains without modifying DNS servers.
+- **Network Testing**: Useful for testing by redirecting domain names to specified IPs.
+- **Blocking**: To block websites by pointing the domain name to a non-routable IP.
+
+## `resolv.conf`
+
+### Description
+The `resolv.conf` file is used to configure DNS servers for a Linux machine. It specifies details about DNS name resolution and how DNS queries should be resolved.
+
+### Format
+This file typically contains entries that specify DNS servers and options for the DNS resolver. Here is a typical example:
+
+```
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+search localdomain
+```
+
+- `nameserver`: Specifies the IP addresses of DNS servers.
+- `search`: Used to define the domain search list.
+
+### Common Uses
+- **DNS Configuration**: Primary use is to point to the right DNS servers.
+- **Search Domains**: Simplifies querying within local networks.
+- **Options**: Can include options like `timeout`, `attempts`, `ndots` that control the behavior of the resolver.
+
+## Editing Guidelines
+
+### `/etc/hosts`
+1. Open the file with a text editor with root privileges:
+   ```bash
+   sudo nano /etc/hosts
+   ```
+2. Make your changes carefully.
+3. Save the file and exit. Changes are applied immediately.
+
+### `resolv.conf`
+1. Open the file with a text editor with root privileges:
+   ```bash
+   sudo nano /resolv.conf
+   ```
+2. Add or modify the nameserver lines as required.
+3. Save and exit. Some systems manage this file automatically (like those using `systemd-resolved`), so manual changes might be overwritten.
+
