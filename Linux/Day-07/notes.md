@@ -1,121 +1,134 @@
-# Linux Networking Commands Documentation
+## Linux Networking Commands
 
-## Table of Contents
-1. [Introduction](#introduction)
-2. [Networking Commands](#networking-commands)
-   - [ifconfig](#ifconfig)
-   - [ip](#ip)
-   - [netstat](#netstat)
-   - [curl](#curl)
-   - [route](#route)
-   - [ping](#ping)
-   - [tracepath](#tracepath)
-   - [hostname](#hostname)
-   - [dig](#dig)
-   - [nslookup](#nslookup)
-   - [telnet](#telnet)
-   - [Additional Commands](#additional-commands)
+### 1. **ifconfig**
+- **Description**: Configures, controls, and queries network interface parameters.
+- **Common Flags**:
+  - `-a`: Displays all interfaces, even if down.
+  - `-s`: Displays a short list.
+- **Example**:
+  ```bash
+  ifconfig eth0
+  ```
 
-## Introduction
-This document provides an overview and practical usage examples of common Linux networking commands. These commands are essential tools for system administrators and network engineers for troubleshooting and managing network-related tasks in a Linux environment.
+### 2. **ip**
+- **Description**: A versatile tool for network interface, routing, and tunnel configuration.
+- **Subcommands**:
+  - `addr`: Manage IP addresses.
+  - `route`: Manage routing tables.
+- **Example**:
+  ```bash
+  ip addr show
+  ip route list
+  ```
 
-## Networking Commands
+### 3. **netstat**
+- **Description**: Shows network connections, routing tables, and interface statistics.
+- **Common Flags**:
+  - `-t`: Show TCP connections.
+  - `-u`: Show UDP connections.
+  - `-l`: Show only listening sockets.
+  - `-n`: Show numerical addresses instead of resolving names.
+- **Example**:
+  ```bash
+  netstat -tuln
+  ```
 
-### ifconfig
-**Description**: `ifconfig` is used to configure, control, and query TCP/IP network interface parameters.
+### 4. **curl**
+- **Description**: A tool to transfer data from or to a server.
+- **Common Flags**:
+  - `-O`: Save file with its original name.
+  - `-o`: Save output to a file named as specified.
+  - `-I`: Fetch the HTTP-header only.
+- **Example**:
+  ```bash
+  curl -O https://example.com/file.tar.gz
+  ```
 
-**Example**:
-```bash
-ifconfig eth0
-```
+### 5. **route**
+- **Description**: Show or manipulate the IP routing table.
+- **Common Flags**:
+  - `-n`: Show numerical addresses instead of trying to determine symbolic host names.
+- **Example**:
+  ```bash
+  route -n
+  ```
 
-### ip
-**Description**: Modern replacement for `ifconfig`, used to show and manipulate routing, network devices, interfaces, and tunnels.
+### 6. **ping**
+- **Description**: Checks connectivity between the host and a target node.
+- **Common Flags**:
+  - `-c`: Number of echo requests to send.
+  - `-i`: Interval between successive packet sends.
+- **Example**:
+  ```bash
+  ping -c 4 google.com
+  ```
 
-**Example**:
-```bash
-ip addr show
-```
+### 7. **tracepath**
+- **Description**: Traces path to a network host discovering MTU along this path.
+- **Example**:
+  ```bash
+  tracepath google.com
+  ```
 
-### netstat
-**Description**: Displays network connections, routing tables, interface statistics, and more.
+### 8. **hostname**
+- **Description**: Shows or sets the system’s host name.
+- **Example**:
+  ```bash
+  hostname
+  ```
 
-**Example**:
-```bash
-netstat -tuln
-```
+### 9. **dig**
+- **Description**: DNS lookup utility.
+- **Common Flags**:
+  - `+short`: Gives just the answer to a query.
+  - `+trace`: Traces the path of the query to the DNS root.
+- **Example**:
+  ```bash
+  dig google.com +short
+  ```
 
-### curl
-**Description**: Tool to transfer data from or to a server.
+### 10. **nslookup**
+- **Description**: Queries Internet domain name servers.
+- **Common Options**:
+  - `-type=any`: Queries DNS for records of any type.
+- **Example**:
+  ```bash
+  nslookup -type=mx google.com
+  ```
 
-**Example**:
-```bash
-curl https://www.example.com
-```
-
-### route
-**Description**: Shows/manipulates the IP routing table.
-
-**Example**:
-```bash
-route -n
-```
-
-### ping
-**Description**: Tests the reachability of a host on an IP network.
-
-**Example**:
-```bash
-ping -c 4 google.com
-```
-
-### tracepath
-**Description**: Traces path packets take to a network host.
-
-**Example**:
-```bash
-tracepath google.com
-```
-
-### hostname
-**Description**: Shows or sets the system's host name.
-
-**Example**:
-```bash
-hostname
-```
-
-### dig
-**Description**: DNS lookup utility.
-
-**Example**:
-```bash
-dig google.com
-```
-
-### nslookup
-**Description**: Queries Internet domain name servers.
-
-**Example**:
-```bash
-nslookup google.com
-```
-
-### telnet
-**Description**: Performs interactive communication with another host.
-
-**Example**:
-```bash
-telnet example.com 80
-```
+### 11. **telnet**
+- **Description**: Interacts with another host using the TELNET protocol.
+- **Example**:
+  ```bash
+  telnet example.com 80
+  ```
 
 ### Additional Commands
-- **ss**: Investigates sockets.
-- **mtr**: Network diagnostic tool.
-- **wget**: Retrieves files from the web.
-- **arp**: Manipulates or displays the ARP cache.
 
-## Conclusion
-This guide provides a foundation for using various Linux networking commands to manage and troubleshoot network-related tasks. Proper understanding and usage of these commands can significantly aid in network administration.
+- **ss**: Utility to investigate sockets.
+  - `-t`: Display TCP sockets.
+  - `-u`: Display UDP sockets.
+  - `-l`: Show listening sockets.
+  - `-n`: Do not resolve names.
+  ```bash
+  ss -tuln
+  ```
+  
+- **mtr**: Combines the functionality of `traceroute` and `ping`.
+  - `--report`: Generates a summary report of the connection route.
+  ```bash
+  mtr --report google.com
+  ```
 
----
+- **wget**: Non-interactive network downloader.
+  - `-c`: Continue getting a partially-downloaded file.
+  - `-r`: Recursive download.
+  ```bash
+  wget -c https://example.com/file.tar.gz
+  ```
+
+- **arp**: Manipulate or display the ARP cache.
+  - `-a`: Display all ARP entries.
+  ```bash
+  arp -a
+  ```
