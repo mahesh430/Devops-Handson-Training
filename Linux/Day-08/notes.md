@@ -221,3 +221,8 @@ To list zip file contents:
 ```bash
 unzip -l archive_name.zip
 ```
+## SCP Command
+### Used to copy files remotly 
+```bash
+scp -i "mahesh.cer" devops.txt ec2-user@ec2-44-222-205-70.compute-1.amazonaws.com:/home/ec2-user
+```
