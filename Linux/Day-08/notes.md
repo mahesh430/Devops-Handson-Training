@@ -174,9 +174,10 @@ gunzip filename.gz
 To create a tar archive:
 ```bash
 tar -cvf archive_name.tar directory_or_files
+
 -c: Create. This instructs tar to create a new archive and add files to it.
--v: Verbose, as explained above.
--f: File, also as explained above.
+-v: Verbose.
+-f: File.
 ```
 To extract from a tar archive:
 ```bash
