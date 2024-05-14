@@ -1,0 +1,29 @@
+#!/bin/bash
+# Update the system
+yum update -y
+
+# Install Nginx
+yum install nginx -y
+
+# Start Nginx and enable it to start on boot
+systemctl start nginx
+systemctl enable nginx
+
+# Download the static website ZIP file
+cd /tmp
+wget https://www.free-css.com/assets/files/free-css-templates/download/page296/listrace.zip
+
+# Install unzip if not installed
+yum install unzip -y
+
+# Unzip the contents to the Nginx directory
+unzip listrace.zip -d /usr/share/nginx/html/
+
+# Move the contents from the extracted folder to the root of html
+# Assuming the main HTML folder is 'listrace' after extraction
+cd /usr/share/nginx/html/
+mv listrace/* .
+rm -rf listrace listrace.zip
+
+# Restart Nginx to apply changes
+systemctl restart nginx
