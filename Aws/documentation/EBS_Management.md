@@ -29,7 +29,10 @@ Before attempting to mount the volume, verify that it is recognized by the syste
   ```bash
   sudo mkdir /data
   ```
-
+- **Formate the volume** if the volume is not formated, format it using the file system such as ext4
+ ```bash
+  sudo mkfs -t ext4 /dev/xvdf
+  ```
 - **Mount the disk** to the new directory:
   ```bash
   sudo mount /dev/xvdf /data
