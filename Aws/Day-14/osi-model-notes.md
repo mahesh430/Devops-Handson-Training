@@ -2,8 +2,7 @@
 # OSI Model: From Application Layer to Physical Layer
 
 The OSI (Open Systems Interconnection) model is a conceptual framework used to understand and implement network communications between different systems. It divides the communication process into seven distinct layers, each with specific functions.
-
-Aws/Day-14/osi.model.png
+![image](https://github.com/mahesh430/Devops-Handson-Training/assets/16769593/1cb94f48-e7e5-4437-93fd-06f290e9f626)
 
 ## Application Layer (Layer 7)
 
