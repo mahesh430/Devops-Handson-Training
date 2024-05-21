@@ -3,8 +3,7 @@
 
 The OSI (Open Systems Interconnection) model is a conceptual framework used to understand and implement network communications between different systems. It divides the communication process into seven distinct layers, each with specific functions.
 
-![OSI Model Illustration](path/to/your/image.png)
-https://github.com/mahesh430/Devops-Handson-Training/blob/main/Aws/Day-14/osi.model.png
+Aws/Day-14/osi.model.png
 
 ## Application Layer (Layer 7)
 
