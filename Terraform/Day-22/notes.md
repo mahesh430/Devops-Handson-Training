@@ -98,6 +98,11 @@ key_name      = "prd-key-pair"
 ```
 
 #### 4. Passing Runtime Variables
+Using -var option: You can directly pass variables on the command line when running Terraform commands. This is useful for overriding one or a few variables without creating a separate variables file.
+```sh
+terraform apply -var "instance_type=t2.micro" -var "ami=ami-abc123"
+
+```
 
 **Step 5: Pass Variables at Runtime**
 
@@ -164,5 +169,3 @@ terraform destroy -var-file="test.tfvars"
 terraform destroy -var-file="prd.tfvars"
 ```
 ```
-
-This structured approach ensures you can manage different environments effectively using Terraform and document the process clearly in your GitHub repository.
