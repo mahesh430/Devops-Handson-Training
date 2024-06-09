@@ -1,10 +1,8 @@
-### Terraform Modules: Teaching Notes
-
-#### **Overview**
+### Overview
 
 Modules in Terraform are used to create reusable and maintainable infrastructure configurations. They enable you to organize your code, simplify complex setups, and promote reusability and consistency across your infrastructure deployments.
 
-#### **Topics to Cover**
+### Topics to Cover
 
 1. **Introduction to Terraform Modules**
 2. **Creating Local Modules**
@@ -16,22 +14,22 @@ Modules in Terraform are used to create reusable and maintainable infrastructure
 
 ---
 
-### **1. Introduction to Terraform Modules**
+### 1. Introduction to Terraform Modules
 
-#### **Definition**
+#### Definition
 - A module is a container for multiple resources that are used together. A module can consist of a single file or a collection of multiple files.
 - Modules can be nested: a module can call another module which can call another, etc.
 
-#### **Benefits**
+#### Benefits
 - Reusability: Write once, use multiple times.
 - Maintainability: Easier to manage and update.
 - Organization: Structuring code to improve readability and management.
 
 ---
 
-### **2. Creating Local Modules**
+### 2. Creating Local Modules
 
-#### **Structure of a Module**
+#### Structure of a Module
 A typical module structure:
 ```
 module_name/
@@ -41,7 +39,7 @@ module_name/
   ├── README.md
 ```
 
-#### **Example**
+#### Example
 
 **File Structure**:
 ```
@@ -95,9 +93,9 @@ module "vpc" {
 
 ---
 
-### **3. Using Remote Modules**
+### 3. Using Remote Modules
 
-#### **Example**
+#### Example
 
 **Using a Module from the Terraform Registry**:
 ```hcl
@@ -119,9 +117,9 @@ module "vpc" {
 
 ---
 
-### **4. Module Versioning**
+### 4. Module Versioning
 
-#### **Importance**
+#### Importance
 - Ensures consistency and stability across different environments.
 - Facilitates controlled updates and rollback capabilities.
 
@@ -136,7 +134,7 @@ module "vpc" {
 
 ---
 
-### **5. Module Best Practices**
+### 5. Module Best Practices
 
 - **Use Meaningful Names**: Name modules and variables clearly.
 - **Document Modules**: Include a README.md with usage instructions and examples.
@@ -146,9 +144,9 @@ module "vpc" {
 
 ---
 
-### **6. Module Registry**
+### 6. Module Registry
 
-#### **Terraform Registry**
+#### Terraform Registry
 - A central repository to find, publish, and reuse Terraform modules.
 - Modules in the registry follow a standardized naming convention and include versioning.
 
@@ -157,23 +155,23 @@ module "vpc" {
 
 ---
 
-### **7. Hands-On Examples**
+### 7. Hands-On Examples
 
-#### **Example 1: Creating and Using a Local Module**
+#### Example 1: Creating and Using a Local Module
 
 1. **Create a VPC Module**:
     - Define resources in `main.tf`, variables in `variables.tf`, and outputs in `outputs.tf`.
 2. **Use the VPC Module**:
     - Reference the local module in your main configuration.
 
-#### **Example 2: Using a Remote Module from the Registry**
+#### Example 2: Using a Remote Module from the Registry
 
 1. **Choose a Module**:
     - Select a module from the Terraform Registry.
 2. **Implement the Module**:
     - Define the module source and version in your configuration file.
 
-#### **Example 3: Creating a Module Repository on GitHub**
+#### Example 3: Creating a Module Repository on GitHub
 
 1. **Create a GitHub Repository**:
     - Structure the repository with `main.tf`, `variables.tf`, `outputs.tf`, and `README.md`.
@@ -188,37 +186,6 @@ module "vpc" {
 
 ---
 
-### **GitHub Documentation Approach**
-
-**README.md Example**:
-```markdown
-# My VPC Module
-
-This module creates a VPC with public and private subnets.
-
-## Usage
-
-```hcl
-module "vpc" {
-  source     = "./my-vpc"
-  cidr_block = "10.0.0.0/16"
-  vpc_name   = "my-vpc"
-}
-```
-
-## Inputs
-
-| Name       | Description             | Type   | Default | Required |
-|------------|-------------------------|--------|---------|----------|
-| cidr_block | The CIDR block for the VPC | string | n/a     | yes      |
-| vpc_name   | The name of the VPC       | string | n/a     | yes      |
-
-## Outputs
-
-| Name   | Description         |
-|--------|---------------------|
-| vpc_id | The ID of the VPC   |
-```
 
 ### References
 - [Terraform Documentation](https://www.terraform.io/docs)
