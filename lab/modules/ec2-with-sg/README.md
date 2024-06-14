@@ -27,3 +27,22 @@ This module creates an EC2 instance and associated security group.
 | `instance_id`       | The ID of the EC2 instance        |
 | `public_ip`         | The public IP of the EC2 instance |
 | `security_group_id` | The ID of the security group      |
+
+
+## Example Usage
+Here's how to call the module:
+
+``` bash
+provider "aws" {
+  region = "us-west-2"
+}
+module "ec2_instance" {
+  source              = "./ec2"
+  ami_id              = "ami-0c55b159cbfafe1f0" # replace with a valid AMI ID
+  instance_type       = "t2.micro"
+  key_name            = "my-key-pair" # replace with your key pair
+  security_group_name = "example-sg"
+  vpc_id              = "vpc-12345678" # replace with a valid VPC ID
+  instance_name       = "example-instance"
+}
+```
