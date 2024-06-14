@@ -1,4 +1,12 @@
 # EC2 Module
+```bash
+terraform-ec2-module/
+  ├── ec2/
+  │   ├── main.tf
+  │   ├── variables.tf
+  │   ├── outputs.tf
+  │   └── README.md
+```
 
 This module creates an EC2 instance and associated security group.
 
