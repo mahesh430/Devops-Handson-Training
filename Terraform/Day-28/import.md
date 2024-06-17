@@ -88,18 +88,6 @@ resource "aws_s3_bucket" "example" {
 terraform import aws_s3_bucket.example my-bucket-name
 ```
 
-### Example 2: Importing a Google Cloud Compute Instance
-
-```hcl
-resource "google_compute_instance" "example" {
-  # instance details will be filled in by Terraform after import
-}
-```
-
-```bash
-terraform import google_compute_instance.example my-instance-id
-```
-
 ## Best Practices
 
 - **Backup State**: Always backup your Terraform state before performing imports.
