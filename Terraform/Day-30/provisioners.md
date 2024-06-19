@@ -14,6 +14,56 @@ Provisioners in Terraform allow you to execute scripts on a local or remote mach
 
 ### Examples
 
+#### Create an SSH Key Pair
+
+Create an SSH key pair that will be used to connect to your EC2 instances.
+
+```sh
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/my_key
+```
+
+This command generates a private key (`my_key`) and a public key (`my_key.pub`) in the `~/.ssh` directory.
+
+#### Upload the SSH Key to AWS
+
+Upload the public key to AWS so it can be used with your EC2 instances.
+
+```sh
+aws ec2 import-key-pair --key-name "my_key" --public-key-material file://~/.ssh/my_key.pub
+```
+
+#### Create a Security Group
+
+Create a security group with the necessary permissions to connect to the EC2 instance.
+
+```hcl
+resource "aws_security_group" "example" {
+  name        = "example"
+  description = "Allow SSH and HTTP"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+```
+
 #### Local-exec Provisioner
 
 Executes a local command after the resource is created.
@@ -22,6 +72,8 @@ Executes a local command after the resource is created.
 resource "aws_instance" "example" {
   ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
+  key_name      = "my_key"
+  security_groups = [aws_security_group.example.name]
 
   provisioner "local-exec" {
     command = "echo ${self.private_ip} > private_ip.txt"
@@ -39,6 +91,8 @@ Executes commands on a remote resource (e.g., an EC2 instance).
 resource "aws_instance" "example" {
   ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
+  key_name      = "my_key"
+  security_groups = [aws_security_group.example.name]
 
   connection {
     type        = "ssh"
@@ -68,6 +122,8 @@ Copies files or directories from the local machine to the remote resource.
 resource "aws_instance" "example" {
   ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
+  key_name      = "my_key"
+  security_groups = [aws_security_group.example.name]
 
   connection {
     type        = "ssh"
