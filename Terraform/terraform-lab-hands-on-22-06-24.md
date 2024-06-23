@@ -30,7 +30,7 @@ You are tasked with setting up a scalable, high-availability web application inf
 
 | Variable Name            | Description                       | Type            | Default Value                                |
 |--------------------------|-----------------------------------|-----------------|----------------------------------------------|
-| `instance_count`         | Number of EC2 instances to create | `number`        | `3`                                          |
+| `instance_count`         | Number of EC2 instances to create | `number`        | `1`                                          |
 | `instance_type`          | Type of EC2 instance              | `string`        | `t2.micro`                                   |
 | `ami_id`                 | AMI ID for the EC2 instances      | `string`        | `ami-0c55b159cbfafe1f0` (Amazon Linux 2)     |
 | `security_group_rules`   | Map of security group rules       | `map(map(string))` | `{ "ssh": { "from_port": 22, "to_port": 22, "protocol": "tcp", "cidr": "0.0.0.0/0" }, "http": { "from_port": 80, "to_port": 80, "protocol": "tcp", "cidr": "0.0.0.0/0" }, "https": { "from_port": 443, "to_port": 443, "protocol": "tcp", "cidr": "0.0.0.0/0" } }` |
