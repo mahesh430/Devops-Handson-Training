@@ -1,0 +1,23 @@
+# Terraform files to ignore
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
+
+# Local .terraform directories
+.terraform/
+.terraform.lock.hcl
+
+# AWS CLI
+aws/
+awscliv2.zip
+
+# Commands
+echo "deb [signed-by=/
+gs/
+sudo tee /
+
+# Ignore common directories
+common
+

@@ -7,7 +7,7 @@ provider "aws" {
 resource "aws_security_group" "dynamic_sg" {
   name        = "dynamic-sg"
   description = "Dynamic Security Group"
-  vpc_id      = "vpc-123456"  # Replace with your VPC ID
+  vpc_id      = "vpc-0970dbf0432aa69f5"  # Replace with your VPC ID
 
   dynamic "ingress" {
     for_each = var.security_group_rules
