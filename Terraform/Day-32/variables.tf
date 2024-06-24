@@ -10,6 +10,12 @@ variable "ami_ids" {
   }
 }
 
+variable "aws_region" {
+  description = "The AWS region to deploy the instance"
+  type        = string
+  default     = "us-east-1"
+}
+
 variable "security_group_rules" {
   description = "Map of security group rules"
   type        = map(map(string))
