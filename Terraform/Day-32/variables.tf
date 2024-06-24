@@ -1,4 +1,4 @@
-
+# variables.tf
 variable "ami_ids" {
   description = "Map of AMI IDs for different regions"
   type        = map(string)
@@ -23,6 +23,12 @@ variable "security_group_rules" {
     http = {
       from_port = "80"
       to_port   = "80"
+      protocol  = "tcp"
+      cidr      = "0.0.0.0/0"
+    }
+    https = {
+      from_port = "443"
+      to_port   = "443"
       protocol  = "tcp"
       cidr      = "0.0.0.0/0"
     }
