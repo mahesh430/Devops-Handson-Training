@@ -3,10 +3,10 @@ variable "ami_ids" {
   description = "Map of AMI IDs for different regions"
   type        = map(string)
   default     = {
-    us-east-1      = "ami-0c55b159cbfafe1f0"
-    us-west-1      = "ami-0abcdef1234567890"
-    eu-west-1      = "ami-0abcdef1234567890"
-    ap-southeast-1 = "ami-0abcdef1234567890"
+    us-east-1      = "ami-08a0d1e16fc3f61ea"
+    us-west-1      = "ami-033fabdd332044f06"
+    eu-west-1      = "ami-0551ce4d67096d606"
+    ap-south-1     = "ami-0e1d06225679bc1c5"
   }
 }
 
