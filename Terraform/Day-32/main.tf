@@ -29,7 +29,7 @@ resource "aws_security_group" "dynamic_sg" {
 
 # Single instance creation using the map variable
 resource "aws_instance" "example" {
-  ami           = var.ami_ids[var.region]
+  ami           = var.ami_ids[var.aws_region]
   instance_type = "t2.micro"
   vpc_security_group_ids = [aws_security_group.dynamic_sg.id]
 
