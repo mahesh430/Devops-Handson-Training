@@ -37,13 +37,3 @@ resource "aws_instance" "example" {
     Name = "ExampleInstance"
   }
 }
-
-output "example_instance_id" {
-  description = "The ID of the example EC2 instance"
-  value       = aws_instance.example.id
-}
-
-output "dynamic_security_group_id" {
-  description = "The ID of the dynamic security group"
-  value       = aws_security_group.dynamic_sg.id
-}
