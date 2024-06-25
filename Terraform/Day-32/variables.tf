@@ -15,7 +15,7 @@ variable "aws_region" {
   type        = string
   default     = "us-east-1"
 }
-
+/*
 variable "security_group_rules" {
   description = "Map of security group rules"
   type        = map(map(string))
@@ -40,3 +40,4 @@ variable "security_group_rules" {
     }
   }
 }
+*/
