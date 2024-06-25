@@ -48,3 +48,9 @@ variable "env" {
   type = string
   default = "dev"
 }
+
+variable "create_instance" {
+  description = "Flag to create the instance"
+  type        = bool
+  default     = true
+}
