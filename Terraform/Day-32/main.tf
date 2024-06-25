@@ -2,7 +2,7 @@
 provider "aws" {
   region = "us-east-1" # Specify the desired region
 }
-
+/*
 # Security group creation using dynamic blocks
 resource "aws_security_group" "dynamic_sg" {
   name        = "dynamic-sg"
@@ -26,6 +26,7 @@ resource "aws_security_group" "dynamic_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+*/
 
 # Single instance creation using the map variable
 resource "aws_instance" "example" {
