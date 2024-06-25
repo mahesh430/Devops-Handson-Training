@@ -1,4 +1,3 @@
-# variables.tf
 variable "ami_ids" {
   description = "Map of AMI IDs for different regions"
   type        = map(string)
@@ -15,13 +14,13 @@ variable "aws_region" {
   type        = string
   default     = "us-east-1"
 }
-/*
+
 variable "security_group_rules" {
   description = "Map of security group rules"
   type        = map(map(string))
   default = {
     ssh = {
-      from_port = "22"
+      from_port = "22" 
       to_port   = "22"
       protocol  = "tcp"
       cidr      = "0.0.0.0/0"
@@ -40,4 +39,4 @@ variable "security_group_rules" {
     }
   }
 }
-*/
+
