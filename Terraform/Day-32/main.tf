@@ -33,7 +33,7 @@ resource "aws_security_group" "dynamic_sg" {
 resource "aws_instance" "example" {
   ami           = var.ami_ids[var.aws_region]
   instance_type = "t2.micro"
-  # vpc_security_group_ids = [aws_security_group.dynamic_sg.id]
+  vpc_security_group_ids = [aws_security_group.dynamic_sg.id]
 
   tags = {
     Name = "ExampleInstance"
