@@ -3,6 +3,12 @@ provider "aws" {
   region = var.aws_region # Specify the desired region
 }
 
+locals {
+  name = "${var.prefix}-${var.env}-${var.aws_region}-aws"
+  env = var.env
+}
+
+
 
 # Security group creation using dynamic blocks
 resource "aws_security_group" "dynamic_sg" {
@@ -37,6 +43,6 @@ resource "aws_instance" "example" {
   vpc_security_group_ids = [aws_security_group.dynamic_sg.id]
 
   tags = {
-    Name = "ExampleInstance"
+    Name = local.name
   }
 }
