@@ -1,4 +1,3 @@
-Sure, here's the updated setup with instance size included in the `tfvars` files:
 
 ### Terraform Workspaces for Managing Environments
 
