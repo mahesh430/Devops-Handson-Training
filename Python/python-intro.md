@@ -155,13 +155,29 @@
   import module_name as alias
   ```
 
-- **Example**:
+- **Example 1**:
   ```python
   import math
   print(math.sqrt(16))  # 4.0
   from math import pi
   print(pi)  # 3.141592653589793
   ```
+  - **Example 2**:
+``` bash
+import boto3
+
+# Create an S3 client
+s3 = boto3.client('s3')
+
+# List all buckets
+response = s3.list_buckets()
+
+# Print bucket names
+print('Existing buckets:')
+for bucket in response['Buckets']:
+    print(f'  {bucket["Name"]}')
+
+```
 
 ### 11. File Handling
 - **Opening and Closing Files**:
