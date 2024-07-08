@@ -88,8 +88,8 @@
 2. In the **Body Mapping Templates** section, click **Add mapping template**.
 3. Enter `application/json` and click the checkmark.
 4. Paste the following JSON into the mapping template:
-    ```json
-    {
+```bash
+{
   "TableName": "inventory",
   "IndexName": "Environment-index",
   "KeyConditionExpression": "#environment = :env_value",
@@ -103,7 +103,7 @@
   }
 }
 
-    ```
+```
 5. Click **Save**.
 
 #### Configure Method Response
