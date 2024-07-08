@@ -90,14 +90,19 @@
 4. Paste the following JSON into the mapping template:
     ```json
     {
-        "TableName": "inventory-env",
-        "KeyConditionExpression": "Environment = :v1",
-        "ExpressionAttributeValues": {
-            ":v1": {
-                "S": "$input.params('environment')"
-            }
-        }
+  "TableName": "inventory",
+  "IndexName": "Environment-index",
+  "KeyConditionExpression": "#environment = :env_value",
+  "ExpressionAttributeNames": {
+    "#environment": "Environment"
+  },
+  "ExpressionAttributeValues": {
+    ":env_value": {
+      "S": "$input.params('environment')"
     }
+  }
+}
+
     ```
 5. Click **Save**.
 
