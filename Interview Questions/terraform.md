@@ -108,7 +108,23 @@ In this example:
 - Reduce code duplication.
 - Version modules for consistent use.
 
-### 9. Could you explain the differences between the count and for_each meta-arguments in Terraform?
+### 9. What does "terraform refresh do"?
+Terraform refresh (deprecated) attempts to update the Terraform state file to match the actual state of your infrastructure resources. It does not modify the infrastructure itself.
+### 9. What does "terraform taint" do?
+Terraform taint marks a resource as potentially corrupted and schedules it for recreation on the next terraform apply.
+While it works, it's deprecated. Use terraform apply -replace instead for better control.
+### 9. How can you get a list of Terraform resources of a given folder with terraform code?
+ terraform state list
+### 9. Can you move terraform state from one place to another?
+terraform state mv
+### 9. What does terraform init command do?
+Terraform init initializes a Terraform working directory. In short, it gets your directory ready to use Terraform by:
+
+ - Installing required plugins for interacting with cloud providers (e.g., AWS, Azure).
+ - Downloading necessary modules.
+ - Setting up the backend configuration (optional).
+
+### 10. Could you explain the differences between the count and for_each meta-arguments in Terraform?
 - **`count`**:
   - Used for creating multiple instances of a resource or module based on a numeric value.
   - Allows conditional creation of resources using `count = 0` (resource not created) or `count = 1` (resource created).
@@ -136,3 +152,77 @@ resource "aws_instance" "example" {
 ```
 
 In summary, Terraform manages dependencies using implicit references and explicit `depends_on` declarations.
+
+### 11. There are 5 people in your team that use Terraform. Some time in the last few days, a resource in AWS changed. How can you find out who did this?
+
+ If it was done via Console, Cloudtrail can tell you. If it was done via Terraform code, git repo AND AWS Cloudtrail can tell you.
+
+### 12. You made a module. One Terraform code uses that module. But, now, you improved that module, but the "caller" code is not compatible with the new version of the module. How can you have both versions of the module in use?
+ You can have verions on your modules and the caller code can refer to specific version of the module.
+
+### 13. You have existing infrastructure in AWS that was NOT made by Terraform. How can you bring that infrastructure in Terraform code's control?
+If you all want is the "state" to be in Terraform, you can use "terraform import" commnad.
+
+### 14. How can you tackle secrets in Terraform?
+Starting version 0.14, you can mark your variables "sensitive". This allows logs of these variables to be masked. You can also integrate Vault with Terraform.
+
+### 15. You have 2 folders of terraform code. Folder A and Folder B. Folder B needs to use output (state) from folder A to create resources. How can you accomplish this?
+This has been long-standing problem with Terraform. Terragrunt is one way to get this done. Others have implement custom Python scripts that copies states back and forthe between folders.
+
+### 16. Why would you need "data" resources in Terraform?
+To refer to resources that already exists in AWS. For example, list of AMIs in a region.
+
+### 17. Is it safe to store terraform state in a private git repo? Why or why not?
+It is NOT safe to store in git repos, because it can hold secrets. Also, it is likely that people will override each other's changes in state.
+### 18. You are going to deploy similar resources in Development, Staging and Prod environments. How can you code so that you can deploy to similar Terraform code with repeating your code.
+
+You can use Terraform modules and workspaces:
+
+- **Modules:** Create a module for your resources and reuse it with different parameters for each environment.
+- **Workspaces:** Manage multiple environments using the same configuration and switch between them using workspaces.
+
+This approach avoids code duplication and maintains consistency across environments.
+### 19. What is a provider and why do you need it?
+Terraform doesn't directly create resources in the cloud. It interacts with provider (given by AWS, GCP, etc.), which enables communication between Terraform and the cloud provider APIs (AWS, GCP etc.).
+Using the same idea, Terraform can also deploy resources in non-cloud applications as long as it has a provider (e.g. Hashicorp Vault) 
+```bash
+provider "aws" {
+  region = "us-east-1"
+}
+```
+
+### 20. Can a module call another module?
+
+Yes, Terraform modules can call other modules, but it is not recommended
+
+``` bash
+# main.tf
+module "vpc" {
+  source = "./modules/vpc"
+  cidr_block = "10.0.0.0/16"
+}
+
+module "web_server" {
+  source = "./modules/web_server"
+  vpc_id = module.vpc.vpc_id
+}
+```
+
+### 21. Why do we need terraform.tfvars file?
+
+If you do not hard code variables, you can set values in terraform.tfvars files (different values per environment). This way, your code doesn't change and you can follow DRY principle.
+
+### 22. What negative impact does it have if you remove .terraform folder?
+None. Terraform will simply download everything when you run terraform init command
+### Using Terraform , you have deployed 6 resources in AWS. However, a developer deleted on of them via AWS Console. Turns out that , that resource was not needed any way. How can you make your terraform code and terraform state sync up now?
+ - terraform state rm resource_name &
+ - remove the relevant part of the code that creates the deleted resource
+### How would switch between versions of Terraform?
+There are tools for managing Terraform versions. Popular options include:
+
+tfswitch: A command-line tool that lets you download and switch between Terraform versions easily.
+tfenv: Another popular version manager for Terraform.
+### Which Terraform command ensures my code follows consistent formatting guidelines?
+terraform fmt
+### Is there a tool that can look for security vulnerabilities in your terraform code?
+Yes. tfsec
