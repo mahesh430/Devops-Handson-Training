@@ -7,7 +7,7 @@ Terraform manages state by storing information about your infrastructure in a st
 In summary, Terraform's state management is essential for accurate tracking, efficient operations, and ensuring infrastructure consistency.
 
 ### 2. What is the best way to store the Terraform state file?
-The best way to store the state file is to keep it in a remote backend like S3 or GitLab-managed Terraform state. This ensures that whenever multiple people are working on the same code, resource duplication won’t happen.
+The best way to store the state file is to keep it in a remote backend like S3. This ensures that whenever multiple people are working on the same code, resource duplication won’t happen.
 
 ### 3. What is Terraform state locking?
 Whenever we are working on any Terraform code and do `terraform plan`, `apply`, or `destroy`, Terraform will lock the state file to prevent destructive actions.
