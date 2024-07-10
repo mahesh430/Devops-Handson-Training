@@ -226,3 +226,8 @@ tfenv: Another popular version manager for Terraform.
 terraform fmt
 ### Is there a tool that can look for security vulnerabilities in your terraform code?
 Yes. tfsec
+
+
+alias 
+
+some code related question
