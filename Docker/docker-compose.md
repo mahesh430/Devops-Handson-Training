@@ -140,6 +140,96 @@ volumes:
 
 ### Accessing the WordPress Site
 
+
+
+To log in to a MySQL database running inside a Docker container and create tables, you can follow these steps:
+
+1. **Identify the Container ID or Name:**
+   First, you need to find out the Container ID or name of the MySQL container. You can do this by running:
+   ```sh
+   docker ps
+   ```
+   This will list all running containers. Look for your MySQL container in the list.
+
+2. **Log in to the MySQL Container:**
+   You can log in to the MySQL container using the `docker exec` command. Replace `CONTAINER_ID` with the actual Container ID or name of your MySQL container:
+   ```sh
+   docker exec -it CONTAINER_ID mysql -u root -p
+   ```
+   You will be prompted to enter the root password. This is the password you set when you started the MySQL container.
+
+3. **Create a Database:**
+   Once logged in, you can create a database by running:
+   ```sql
+   CREATE DATABASE your_database_name;
+   ```
+
+4. **Use the Database:**
+   Select the database you just created:
+   ```sql
+   USE your_database_name;
+   ```
+
+5. **Create Tables:**
+   Now you can create tables within the selected database. Here is an example of how to create a table:
+   ```sql
+   CREATE TABLE your_table_name (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       name VARCHAR(255) NOT NULL,
+       age INT,
+       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   );
+   ```
+
+Here is a step-by-step example:
+
+### Example
+
+1. **Find the MySQL Container ID or Name:**
+   ```sh
+   docker ps
+   ```
+
+2. **Log in to the MySQL Container:**
+   ```sh
+   docker exec -it mysql_container_name mysql -u root -p
+   ```
+
+3. **Enter the Root Password:**
+   ```sh
+   Enter password: your_password
+   ```
+
+4. **Create a Database:**
+   ```sql
+   CREATE DATABASE example_db;
+   ```
+
+5. **Use the Database:**
+   ```sql
+   USE example_db;
+   ```
+
+6. **Create a Table:**
+   ```sql
+   CREATE TABLE users (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       username VARCHAR(255) NOT NULL,
+       email VARCHAR(255) NOT NULL,
+       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   );
+   ```
+
+```sql
+INSERT INTO users (username, email) VALUES ('john_doe', 'john.doe@example.com');
+INSERT INTO users (username, email) VALUES ('jane_smith', 'jane.smith@example.com');
+INSERT INTO users (username, email) VALUES ('alice_johnson', 'alice.johnson@example.com');
+INSERT INTO users (username, email) VALUES ('bob_brown', 'bob.brown@example.com');
+INSERT INTO users (username, email) VALUES ('charlie_davis', 'charlie.davis@example.com');
+
+```
+By following these steps, you can log in to your MySQL container, create databases, and create tables within those databases.
+
 After running `docker-compose up -d`, you can access the WordPress site by navigating to `http://localhost:8000` in your web browser.
 
 This example and explanation should help you effectively teach Docker Compose and demonstrate its benefits with a practical example. Let me know if you need any further details or have any questions!
