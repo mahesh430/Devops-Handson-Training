@@ -50,22 +50,6 @@ To configure a Jenkins Git webhook, follow these steps:
    - Select `Let me select individual events` and choose `Push events` (or `Just the push event`).
    - Click on `Add webhook`.
 
-2. **GitLab:**
-   - Go to your project on GitLab.
-   - Navigate to `Settings` > `Webhooks`.
-   - In the `URL` field, enter `http://<your-jenkins-server>/gitlab/notify_commit` (replace `<your-jenkins-server>` with your actual Jenkins server URL).
-   - Set the `Secret Token` if required.
-   - Select `Push events`.
-   - Click on `Add webhook`.
-
-3. **Bitbucket:**
-   - Go to your repository on Bitbucket.
-   - Navigate to `Settings` > `Webhooks`.
-   - Click on `Add webhook`.
-   - In the `URL` field, enter `http://<your-jenkins-server>/bitbucket-hook/` (replace `<your-jenkins-server>` with your actual Jenkins server URL).
-   - Set the `Trigger` to `Repository push`.
-   - Click on `Save`.
-
 #### 4. Test the Webhook:
 1. **Push a Change:**
    - Make a change in your repository and push it to the remote repository.
