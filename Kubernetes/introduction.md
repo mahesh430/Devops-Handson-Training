@@ -1,5 +1,3 @@
-Sure, here is a consolidated note that covers Kubernetes architecture, Pods, Services (with types), Deployments, and basic operations like logging into Pods and checking logs.
-
 ## Kubernetes Architecture
 
 https://www.researchgate.net/publication/359854260/figure/fig1/AS:1147677467250690@1650639039609/Kubernetes-architecture.png
