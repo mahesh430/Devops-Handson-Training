@@ -163,55 +163,212 @@ https://www.researchgate.net/publication/359854260/figure/fig1/AS:11476774672506
   ```bash
   kubectl logs my-pod
   ```
+  
+### Kubernetes Volumes
 
-## Accessing the Kubernetes Dashboard
+**Definition**:
+Kubernetes Volumes provide a way to persist data beyond the lifecycle of individual Pods. They are essentially directories that are shared between containers in a Pod.
 
-1. **Install the Dashboard**:
-   ```bash
-   kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
-   ```
+**Types**:
+- **emptyDir**: A temporary directory that gets created when a Pod is assigned to a node and is deleted when the Pod is removed.
+- **hostPath**: Mounts a file or directory from the host node’s filesystem into a Pod.
+- **nfs**: Mounts an NFS (Network File System) share into a Pod.
+- **awsElasticBlockStore**: Mounts an AWS EBS volume into a Pod.
+- **azureDisk**: Mounts an Azure Disk into a Pod.
 
-2. **Start the Dashboard Proxy**:
-   ```bash
-   kubectl proxy
-   ```
+**Example**:
 
-3. **Access the Dashboard**:
-   Open a web browser and navigate to:
-   ```
-   http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
-   ```
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    volumeMounts:
+    - name: my-volume
+      mountPath: /usr/share/nginx/html
+  volumes:
+  - name: my-volume
+    emptyDir: {}
+```
 
-4. **Create a Service Account and ClusterRoleBinding for Dashboard Access**:
-   ```yaml
-   apiVersion: v1
-   kind: ServiceAccount
-   metadata:
-     name: admin-user
-     namespace: kubernetes-dashboard
-   ---
-   apiVersion: rbac.authorization.k8s.io/v1
-   kind: ClusterRoleBinding
-   metadata:
-     name: admin-user
-   roleRef:
-     apiGroup: rbac.authorization.k8s.io
-     kind: ClusterRole
-     name: cluster-admin
-   subjects:
-   - kind: ServiceAccount
-     name: admin-user
-     namespace: kubernetes-dashboard
-   ```
-   ```bash
-   kubectl apply -f dashboard-admin.yaml
-   ```
+In this example, an `emptyDir` volume is used. It creates a temporary directory that will be mounted into the container at `/usr/share/nginx/html`.
 
-5. **Get the Token for the Dashboard Login**:
-   ```bash
-   kubectl -n kubernetes-dashboard create token admin-user
-   ```
+### Persistent Volumes (PVs) and Persistent Volume Claims (PVCs)
 
-   Use this token to log in to the Kubernetes Dashboard.
+**Persistent Volumes (PVs)**:
+- **Definition**: Represents a piece of storage in the cluster. PVs are a way to abstract storage and provide it to Pods.
+- **Lifecycle**: Managed by the cluster, and their lifecycle is independent of Pods.
 
-This note should provide a comprehensive overview for your Kubernetes classes.
+**Persistent Volume Claims (PVCs)**:
+- **Definition**: A request for storage by a user. PVCs are used to request specific storage resources from available PVs.
+
+**Example**:
+
+1. **Persistent Volume (PV)**:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data
+```
+
+This `PersistentVolume` uses `hostPath` to mount storage from the host node’s filesystem.
+
+2. **Persistent Volume Claim (PVC)**:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+```
+
+The `PersistentVolumeClaim` requests 10 Gi of storage with `ReadWriteOnce` access mode.
+
+3. **Pod using PVC**:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    volumeMounts:
+    - name: my-storage
+      mountPath: /usr/share/nginx/html
+  volumes:
+  - name: my-storage
+    persistentVolumeClaim:
+      claimName: my-pvc
+```
+
+This Pod uses the `PersistentVolumeClaim` to mount the storage at `/usr/share/nginx/html`.
+
+### ConfigMaps
+
+**Definition**:
+ConfigMaps allow you to decouple configuration artifacts from container images. They can be used to store configuration data in key-value pairs.
+
+**Usage**:
+- Pass configuration data to Pods.
+- Provide configuration to applications in a standardized way.
+
+**Example**:
+
+1. **ConfigMap Definition**:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  database_url: "mongodb://localhost:27017"
+  log_level: "debug"
+```
+
+2. **Pod using ConfigMap**:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    env:
+    - name: DATABASE_URL
+      valueFrom:
+        configMapKeyRef:
+          name: my-configmap
+          key: database_url
+    - name: LOG_LEVEL
+      valueFrom:
+        configMapKeyRef:
+          name: my-configmap
+          key: log_level
+```
+
+In this example, environment variables in the container are populated from values in the `ConfigMap`.
+
+### Secrets
+
+**Definition**:
+Secrets are used to store sensitive data, such as passwords, OAuth tokens, or ssh keys. Unlike ConfigMaps, Secrets are encoded in base64 to avoid accidental exposure.
+
+**Usage**:
+- Store sensitive information that should not be in plain text.
+
+**Example**:
+
+1. **Secret Definition**:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  username: dXNlcg==      # base64 encoded 'user'
+  password: cGFzc3dvcmQ=  # base64 encoded 'password'
+```
+
+2. **Pod using Secret**:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    env:
+    - name: DATABASE_USER
+      valueFrom:
+        secretKeyRef:
+          name: my-secret
+          key: username
+    - name: DATABASE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: my-secret
+          key: password
+```
+
+In this example, environment variables are populated from the `Secret` values.
+
+### Summary
+
+- **Volumes**: Temporary or persistent storage options for Pods. Types include `emptyDir`, `hostPath`, `nfs`, etc.
+- **Persistent Volumes (PVs)**: Storage resources managed by Kubernetes, independent of Pods.
+- **Persistent Volume Claims (PVCs)**: Requests for storage that Pods use.
+- **ConfigMaps**: Store non-sensitive configuration data in key-value pairs.
+- **Secrets**: Store sensitive data securely, encoded in base64.
+
+These resources provide essential functionality for managing storage and configuration in Kubernetes.
