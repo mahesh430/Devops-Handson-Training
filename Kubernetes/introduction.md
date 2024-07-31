@@ -25,7 +25,7 @@ https://www.researchgate.net/publication/359854260/figure/fig1/AS:11476774672506
     spec:
       containers:
       - name: my-container
-        image: nginx
+        image: mahesh430/aws-inventory-app:5
     ```
     ```bash
     kubectl apply -f pod.yaml
@@ -68,12 +68,15 @@ https://www.researchgate.net/publication/359854260/figure/fig1/AS:11476774672506
        ports:
        - protocol: TCP
          port: 80   # Service Port: The port exposed by the Service
-         targetPort: 80  # Target Port: The port on the Pod that traffic will be forwarded to
-         nodePort: 30007  # NodePort: The port on each node for external access (if type is NodePort)
+         targetPort: 8080  # Target Port: The port on the Pod that traffic will be forwarded to
+         nodePort: 30020  # NodePort: The port on each node for external access (if type is NodePort)
        type: NodePort  # Type of Service, which in this case is NodePort
      ```
      ```bash
      kubectl apply -f service.yaml
+     
+
+     kubectl port-forward my-app 30020:8080
      ```
 
 3. **LoadBalancer**: Exposes the service externally using a cloud provider's load balancer.
