@@ -67,10 +67,10 @@ https://www.researchgate.net/publication/359854260/figure/fig1/AS:11476774672506
          app: my-app
        ports:
        - protocol: TCP
-         port: 80
-         targetPort: 80
-         nodePort: 30007
-       type: NodePort
+         port: 80   # Service Port: The port exposed by the Service
+         targetPort: 80  # Target Port: The port on the Pod that traffic will be forwarded to
+         nodePort: 30007  # NodePort: The port on each node for external access (if type is NodePort)
+       type: NodePort  # Type of Service, which in this case is NodePort
      ```
      ```bash
      kubectl apply -f service.yaml
