@@ -372,3 +372,157 @@ In this example, environment variables are populated from the `Secret` values.
 - **Secrets**: Store sensitive data securely, encoded in base64.
 
 These resources provide essential functionality for managing storage and configuration in Kubernetes.
+
+### Kubernetes Replication Controller
+
+**Replication Controller** ensures that a specified number of pod replicas are running at any one time. If there are too few, it starts more. If there are too many, it stops the extras. This is the older method and has been mostly replaced by ReplicaSets.
+
+**Example:**
+```yaml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx-rc
+spec:
+  replicas: 3
+  selector:
+    app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+
+**Explanation:**
+- **apiVersion**: The version of the Kubernetes API you're using to create this object.
+- **kind**: The type of object, in this case, a ReplicationController.
+- **metadata**: Data to help uniquely identify the object, including a name and namespace.
+- **spec**: Defines the desired behavior of the object.
+  - **replicas**: The number of pod replicas desired.
+  - **selector**: Label query over pods that should match the ReplicationController; pods matching this selector will be managed.
+  - **template**: The pod template describes the pods that will be created.
+
+### Kubernetes ReplicaSet
+
+**ReplicaSet** is the next-generation Replication Controller and supports the same purpose but is more flexible, particularly with selectors.
+
+**Example:**
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-replicaset
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+
+**Explanation:**
+- **apiVersion**: The version of the Kubernetes API you're using to create this object.
+- **kind**: The type of object, in this case, a ReplicaSet.
+- **metadata**: Data to help uniquely identify the object, including a name and namespace.
+- **spec**: Defines the desired behavior of the object.
+  - **replicas**: The number of pod replicas desired.
+  - **selector**: Label query over pods that should match the ReplicaSet.
+  - **template**: The pod template describes the pods that will be created.
+
+### Kubernetes StatefulSet
+
+**StatefulSet** is used for applications that require stable, unique network identifiers, persistent storage, ordered and graceful deployment and scaling, and ordered and automated rolling updates.
+
+**Example:**
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: "nginx"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+```
+
+**Explanation:**
+- **apiVersion**: The version of the Kubernetes API you're using to create this object.
+- **kind**: The type of object, in this case, a StatefulSet.
+- **metadata**: Data to help uniquely identify the object, including a name and namespace.
+- **spec**: Defines the desired behavior of the object.
+  - **serviceName**: Name of the headless service used to handle the network identity.
+  - **replicas**: The number of pod replicas desired.
+  - **selector**: Label query over pods that should match the StatefulSet.
+  - **template**: The pod template describes the pods that will be created.
+  - **volumeClaimTemplates**: Describes the PVCs that will be created for each pod.
+
+### Kubernetes Horizontal Pod Autoscaler (HPA)
+
+**HPA** automatically scales the number of pods in a replication controller, deployment, or replica set based on observed CPU utilization (or other metrics).
+
+**Example:**
+```yaml
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx-deployment
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+```
+
+**Explanation:**
+- **apiVersion**: The version of the Kubernetes API you're using to create this object.
+- **kind**: The type of object, in this case, a HorizontalPodAutoscaler.
+- **metadata**: Data to help uniquely identify the object, including a name and namespace.
+- **spec**: Defines the desired behavior of the object.
+  - **scaleTargetRef**: Reference to the target resource to scale.
+  - **minReplicas**: Minimum number of pods to scale down to.
+  - **maxReplicas**: Maximum number of pods to scale up to.
+  - **metrics**: Specifies the target metrics (e.g., CPU utilization) that will trigger scaling.
