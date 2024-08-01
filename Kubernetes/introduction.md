@@ -321,7 +321,14 @@ Secrets are used to store sensitive data, such as passwords, OAuth tokens, or ss
 
 **Usage**:
 - Store sensitive information that should not be in plain text.
-
+## To encode to base64 use the below command
+``` bash
+echo -n 'your-data' | base64
+```
+## To decode base64 text use the below command
+``` bash
+echo 'encoded-data' | base64 --decode
+```
 **Example**:
 
 1. **Secret Definition**:
